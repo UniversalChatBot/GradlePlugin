@@ -38,7 +38,7 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 pluginBundle {
     website = "https://www.gradle.org/"
-    vcsUrl = "https://github.com/gradle/gradle"
+    vcsUrl = "https://github.com/UniversalChatBot/GradlePlugin"
     version = rootProject.version
     description = "UniversalChatBot Project Gradle plugin."
 
