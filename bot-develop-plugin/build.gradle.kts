@@ -37,7 +37,7 @@ tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "11"
 }
 pluginBundle {
-    website = "https://www.gradle.org/"
+    website = "https://github.com/UniversalChatBot"
     vcsUrl = "https://github.com/UniversalChatBot/GradlePlugin"
     version = rootProject.version
     description = "UniversalChatBot Project Gradle plugin."
