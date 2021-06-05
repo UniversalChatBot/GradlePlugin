@@ -16,7 +16,7 @@ plugins {
 gradlePlugin {
     plugins {
         create("botPlugin") {
-            id = "${rootProject.group}.gradle"
+            id = "${rootProject.group}.gradlePlugin"
             implementationClass = "i.plugin.BootPlugin"
         }
     }
@@ -30,16 +30,7 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-launcher:1.6.2")
 }
 
-tasks.test {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
-}
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions.jvmTarget = "11"
-}
 pluginBundle {
     website = "https://github.com/UniversalChatBot"
     vcsUrl = "https://github.com/UniversalChatBot/GradlePlugin"
@@ -65,7 +56,6 @@ val sourcesJar by tasks.registering(Jar::class) {
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
 }
-print(rootProject.group.toString())
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -79,8 +69,17 @@ publishing {
 
     }
     repositories {
-        maven(mavenLocal())
+        mavenLocal()
     }
 }
 
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
 
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.jvmTarget = "11"
+}
