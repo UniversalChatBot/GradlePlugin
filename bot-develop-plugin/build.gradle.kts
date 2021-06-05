@@ -3,10 +3,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 version = rootProject.version
 group = rootProject.group
 
+val pkgArtifactId = "gradlePlugin"
+
 plugins {
     id("com.gradle.plugin-publish") version "0.15.0"
     kotlin("jvm")
     `java-gradle-plugin`
+    `maven-publish`
+
 }
 
 gradlePlugin {
@@ -40,11 +44,10 @@ pluginBundle {
     website = "https://github.com/UniversalChatBot"
     vcsUrl = "https://github.com/UniversalChatBot/GradlePlugin"
     version = rootProject.version
-    description = "UniversalChatBot Project Gradle plugin."
+    description = "Gradle plugin for UniversalChatBot Project."
 
 
     (plugins) {
-
         "botPlugin" {
             displayName = "UniversalChatBot Project Gradle plugin."
             tags = listOf("individual", "tags", "per", "plugin")
@@ -53,10 +56,31 @@ pluginBundle {
     }
     mavenCoordinates {
         groupId = rootProject.group.toString()
-        artifactId = "gradlePlugin"
+        artifactId = pkgArtifactId
         version = rootProject.version.toString()
     }
 }
 
+val sourcesJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+print(rootProject.group.toString())
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = rootProject.group.toString()
+            artifactId = pkgArtifactId
+            version = rootProject.version.toString()
+            from(components["java"])
+            artifact(sourcesJar.get())
+        }
+
+
+    }
+    repositories {
+        maven(mavenLocal())
+    }
+}
 
 
