@@ -1,4 +1,4 @@
-group = "tech.open-edgn.botManager"
+group = "com.github.universalChatBot"
 version = "0.1-beta"
 
 buildscript {

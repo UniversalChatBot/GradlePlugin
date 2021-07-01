@@ -70,5 +70,5 @@ fabric.properties
 # Editor-based Rest Client
 .idea
 .idea/*
-
+.gradle
 !.gitkeep

@@ -17,14 +17,25 @@ gradlePlugin {
     plugins {
         create("botPlugin") {
             id = "${rootProject.group}.gradlePlugin"
-            implementationClass = "i.plugin.BootPlugin"
+            implementationClass = "i.plugin.ChatBotPlugin"
         }
     }
 }
 
+val processResources by tasks.named("processResources")
+
+processResources.doLast {
+    file("$buildDir/resources/main/build-info.properties").writeText(
+        """
+        GROUP=${project.group}
+        VERSION=${project.version}
+    """.trimIndent(), Charsets.UTF_8
+    )
+}
+
 dependencies {
-    implementation(kotlin("reflect"))
-    implementation(kotlin("stdlib"))
+    compileOnly(kotlin("reflect"))
+    compileOnly(kotlin("stdlib"))
     implementation(gradleApi())
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
     testImplementation("org.junit.platform:junit-platform-launcher:1.6.2")
@@ -33,7 +44,7 @@ dependencies {
 
 pluginBundle {
     website = "https://github.com/UniversalChatBot"
-    vcsUrl = "https://github.com/UniversalChatBot/GradlePlugin"
+    vcsUrl = "https://github.com/UniversalChatBot/ChatBotProject"
     version = rootProject.version
     description = "Gradle plugin for UniversalChatBot Project."
 
@@ -66,7 +77,6 @@ publishing {
             artifact(sourcesJar.get())
         }
 
-
     }
     repositories {
         mavenLocal()
@@ -83,3 +93,4 @@ tasks.test {
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions.jvmTarget = "11"
 }
+

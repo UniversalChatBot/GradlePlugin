@@ -1,3 +1,3 @@
 rootProject.name = "GradlePlugin"
-include("bot-develop-plugin")
+include("gradle-plugin")
 
